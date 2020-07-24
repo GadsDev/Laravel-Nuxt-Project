@@ -1,9 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
+
 use Illuminate\Http\Request;
+//Models
+use App\User;
+// Requests
 use App\Http\Requests\UserRegisterRequest;
+// Resources
+use App\Http\Resources\User as UserResource;
 
 class AuthController extends Controller
 {
@@ -14,6 +19,6 @@ class AuthController extends Controller
             'name' => $request->name,
             'password' => bcrypt($request->password)
         ]);
-        return $user;
+        return new UserResource($user);
     }
 }
