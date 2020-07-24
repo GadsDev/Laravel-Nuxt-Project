@@ -19,6 +19,15 @@ class AuthController extends Controller
             'name' => $request->name,
             'password' => bcrypt($request->password)
         ]);
-        return new UserResource($user);
+
+        if(!$token = auth()->attempt($request->only(['email', 'password']))){
+            return abort(401);
+        }
+        
+        return (new UserResource($request->user()))->additional([
+            'meta' => [
+                'token' => $token
+            ]
+        ]);
     }
 }
