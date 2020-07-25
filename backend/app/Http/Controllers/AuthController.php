@@ -25,4 +25,25 @@ class AuthController extends Controller {
 			],
 		]);
 	}
+
+	public function login(UserLoginRequest $request) {
+		if (!$token = auth()->attempt($request->only(['email', 'password']))) {
+			return response()->json([
+				'erros' => [
+					'email' => ['Sorry we cant find you with those details']
+				]
+				], 422);
+		};
+		
+
+		return (new UserResource($request->user()))->additional([
+			'meta' => [
+				'token' => $token,
+			],
+		]);
+	}
+
+	public function user(Request $request) {
+		return new UserResource($request->user());
+	}
 }
