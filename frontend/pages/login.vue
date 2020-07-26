@@ -1,7 +1,7 @@
 <template>
   <div class="container col-md-6 mt-5">
     <h2>Login</h2>
-    <br>
+    <br />
     <form @submit.prevent="submit">
       <div class="form-group">
         <label>Email address</label>
@@ -9,12 +9,10 @@
           v-model.trim="form.email"
           type="email"
           class="form-control"
-          aria-describedby="emailHelp"
           placeholder="Enter email"
           autofocus
         />
-        <small id="emailHelp" class="form-text text-muted"
-          >Show erros here</small
+        <small class="form-text text-danger" v-if="errors.email">{{errors.email[0]}}</small
         >
       </div>
       <div class="form-group">
@@ -25,35 +23,39 @@
           type="password"
           class="form-control"
         />
+        <small class="form-text text-danger" v-if="errors.password">{{errors.password[0]}}</small>
       </div>
       <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input"/>
+        <input type="checkbox" class="form-check-input" />
         <label class="form-check-label">Check me out</label>
       </div>
       <button type="submit" class="btn btn-primary">Register</button>
     </form>
-     <br>
-     <p>Dont have account ? <nuxt-link to="/register">Register</nuxt-link></p>
+    <br />
+    <p>Dont have account ? <nuxt-link to="/register">Register</nuxt-link></p>
   </div>
 </template>
 
 <script>
 export default {
-  data(){
+  data() {
     return {
       form: {
-        email: '',
-        password: ''
+        email: "",
+        password: ""
       }
-    }
+    };
   },
   methods: {
-    async submit(){
-      const { data } = await this.$auth.loginWith("local", {
-        data: this.form
-      })
-   
-      this.$router.push('/')
+    async submit() {
+      try {
+        const { data } = await this.$auth.loginWith("local", {
+          data: this.form
+        });
+        this.$router.push("/");
+      } catch (error) {
+        console.log("submit error ", error);
+      }
     }
   }
 };
