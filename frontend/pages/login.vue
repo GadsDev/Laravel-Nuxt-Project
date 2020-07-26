@@ -51,10 +51,10 @@ export default {
     async submit(){
       // const response = await this.$axios.$post('http://localhost:8000/api/login', this.form)
       // console.log("response", response);
-      const response = await this.$auth.loginWith("local", {
+      const { data } = await this.$auth.loginWith("local", {
         data: this.form
       })
-      console.log("response", response);
+   
       this.$router.push('/')
     }
   }
