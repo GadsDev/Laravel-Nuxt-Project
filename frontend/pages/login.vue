@@ -38,6 +38,7 @@
 
 <script>
 export default {
+  middleware: ['guest'],
   data() {
     return {
       form: {
@@ -52,7 +53,9 @@ export default {
         const { data } = await this.$auth.loginWith("local", {
           data: this.form
         });
-        this.$router.push("/");
+        this.$router.push({
+          path: this.$route.query.redirect || "/profile"
+        });
       } catch (error) {
         console.log("submit error ", error);
       }

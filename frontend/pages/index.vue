@@ -1,10 +1,10 @@
 <template>
-  
+  <div class=""><h2 class="">Home Page</h2></div>
 </template>
 
 <script>
 export default {
-    middleware: ['auth']
+
 }
 </script>
 
