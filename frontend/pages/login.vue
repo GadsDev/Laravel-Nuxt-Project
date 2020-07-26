@@ -29,7 +29,7 @@
         <input type="checkbox" class="form-check-input" />
         <label class="form-check-label">Check me out</label>
       </div>
-      <button type="submit" class="btn btn-primary">Register</button>
+      <button type="submit" class="btn btn-primary">Login</button>
     </form>
     <br />
     <p>Dont have account ? <nuxt-link to="/register">Register</nuxt-link></p>
