@@ -2,43 +2,44 @@
   <div class="container col-md-6 mt-5">
     <h2>Register</h2>
     <br />
-    <form>
+    <form @submit.prevent="submit">
       <div class="form-group">
-        <label for="exampleInputEmail1">Full Name</label>
-        <input
+        <label>Full Name</label>
+        <input     
+          autofocus
+          v-model.trim="form.name"     
           placeholder="Enter your name"
           type="text"
-          class="form-control"
-          id="exampleInputFullName1"
-          aria-describedby="fullNameHelp"
+          class="form-control"          
         />
-        <small id="fullNameHelp" class="form-text text-muted"
+        <small class="form-text text-muted"
           >Show erros here</small
         >
       </div>
        <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
+        <label>Email address</label>
         <input
+          v-model.trim="form.email"
           type="email"
           class="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
         />
-        <small id="emailHelp" class="form-text text-muted"
-          >Show erros here</small
+        <small class="form-text text-muted"
+        >Show erros here</small
         >
       </div>
       <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
+        <label>Password</label>
         <input
+          v-model.trim="form.password"
           type="password"
           class="form-control"
-          id="exampleInputPassword1"
         />
+        <small class="form-text text-muted"
+        >Show erros here</small>
       </div>
       <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        <input type="checkbox" class="form-check-input"/>
+        <label class="form-check-label">Check me out</label>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -48,7 +49,31 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data(){
+    return {
+      form: {
+        name: '',
+        email: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    async submit(){
+      const {data} = await this.$axios.$post('register', this.form)
+
+      await this.$auth.loginWith("local", {
+        data: {
+          email: this.form.email,
+          password: this.form.password
+        }       
+      })
+
+      this.$router.push('/')
+    }
+  }
+};
 </script>
 
 <style></style>

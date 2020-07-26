@@ -6,7 +6,7 @@
       <div class="form-group">
         <label>Email address</label>
         <input
-          v-model="form.email"
+          v-model.trim="form.email"
           type="email"
           class="form-control"
           aria-describedby="emailHelp"
@@ -20,7 +20,7 @@
       <div class="form-group">
         <label>Password</label>
         <input
-          v-model="form.password"
+          v-model.trim="form.password"
           placeholder="Enter password"
           type="password"
           class="form-control"
@@ -30,7 +30,7 @@
         <input type="checkbox" class="form-check-input"/>
         <label class="form-check-label">Check me out</label>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Register</button>
     </form>
      <br>
      <p>Dont have account ? <nuxt-link to="/register">Register</nuxt-link></p>
@@ -49,8 +49,6 @@ export default {
   },
   methods: {
     async submit(){
-      // const response = await this.$axios.$post('http://localhost:8000/api/login', this.form)
-      // console.log("response", response);
       const { data } = await this.$auth.loginWith("local", {
         data: this.form
       })
