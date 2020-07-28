@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Post;
 use App\Topic;
 use App\Http\Resources\Topic as TopicResource;
+use App\Http\Requests\TopicCreateRequest;
 
 class TopicController extends Controller
 {
-    public function store(Request $request){
+    public function store(TopicCreateRequest $request){
         $topic = new Topic;
         $topic->title = $request->title;
         //Get User by JWT
